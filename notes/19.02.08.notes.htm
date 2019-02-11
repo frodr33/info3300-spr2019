@@ -53,7 +53,11 @@
   <script id="notes">
 
   // 1. What the heck is "this" in Javascript functions and events?
-
+  d3.selectAll('.hellodiv').style('background-color','chartreuse');
+  d3.selectAll('.hellodiv').on('click', function(){
+    console.log(this);
+    d3.select((this).style("background_color", "beige"));
+  })
 
   // 2 (again). How do we create lots of elements (but not using data just yet)?
 
@@ -69,7 +73,7 @@
         .attr("r", 3)
         .attr("cx", randomPixel())
         .attr("cy", randomPixel())
-        .style("fill", color);
+        .style("fill", color); // randomly choose color
   }
 
   // 3. How do we update the attributes of existing elements?
@@ -78,7 +82,16 @@
   d3.selectAll("circle")
       .transition().delay(1000).duration(1500) // wait 1 second, then spend 1.5s changing
       .attr("cx",   randomPixel()    ); // Played with parentheses
+      // randomPixel() -> precalculates the pixel value all circles will go to
+      // randomPixel -> calls function for each circle, has different coordinates then
 
+  d3.selectAll("circle").each(() => {
+    d3.select(this).transition()
+      .delay(1000)
+      .duration(1500)
+      .attr("cx", randomPixel())
+      .attr("cy", randomPixel());
+  });
 
   </script>
 
